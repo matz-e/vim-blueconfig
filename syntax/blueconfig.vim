@@ -17,6 +17,15 @@ syn region bcCommentBlock start=+{+ end=+}+ contained
 syn match bcNumber "\<-\?\d\+\(\.\d\+\)\?\>" contained
 syn match bcNumber "\<\d\{1,2\}\(:\d\{1,2\}\)\{1,2\}\>" contained
 
+syn keyword bcConfigureKeyword SynapseConfigure nextgroup=bcConfigureIdentifier skipwhite
+syn match bcConfigureIdentifier display "\(%s.\)\?\w\+" contained nextgroup=bcConfigureOperator skipwhite
+syn match bcConfigureOperator display "*\?=" contained nextgroup=bcConfigureNumber skipwhite
+syn match bcConfigureNumber display "-\?\d\+\(.\d\+\)\?" contained nextgroup=bcConfigureIdentifier skipwhite
+syn match bcIdentifier display "%s" containedin=bcConfigureIdentifier
+
+syn match bcConfigureNumber "\<-\?\d\+\(\.\d\+\)\?\>" contained nextgroup=bcConfigureIdentifier skipwhite
+syn match bcConfigureNumber "\<\d\{1,2\}\(:\d\{1,2\}\)\{1,2\}\>" contained nextgroup=bcConfigureIdentifier skipwhite
+
 syn match bcPath "\(https\?://\|ssh://\)\?\([[:alpha:][:digit:][:punct:]]\+/\)*[[:alpha:][:digit:][:punct:]]\+" contained
 syn match bcString "[[:alpha:][:digit:][:punct:]]\+" contained
 
@@ -25,7 +34,7 @@ syn match bcConnectionTarget "\%([^[:cntrl:][:space:][:punct:][:digit:]]\)\%([^[
                         \ contained nextgroup=bcConnectionDefinition skipwhite skipnl
 syn region bcConnectionDefinition start=+{+ end=+}+
                         \ transparent contained
-                        \ contains=bcConnectionNumberKeyword,bcConnectionPathKeyword,bcConnectionStringKeyword,bcComment
+                        \ contains=bcConfigureKeyword,bcConnectionNumberKeyword,bcConnectionPathKeyword,bcConnectionStringKeyword,bcComment
 
 syn keyword bcConnectionNumberKeyword
                         \ Weight SpontMinis
@@ -47,6 +56,7 @@ syn region bcRunDefinition start=+{+ end=+}+
 syn keyword bcRunNumberKeyword
                         \ Date Time Version BaseSeed Duration Dt ForwardSkip
                         \ NumBonusFiles NumSynapseFiles
+                        \ CentralHyperColumn
                         \ contained nextgroup=bcNumber skipwhite
 syn keyword bcRunPathKeyword
                         \ gitPath svnPath MeshPath MorphologyPath METypePath CircuitPath
@@ -145,6 +155,12 @@ hi def link bcCommentBlock Comment
 hi def link bcNumber Number
 hi def link bcPath Identifier
 hi def link bcString String
+
+hi def link bcConfigureKeyword Keyword
+hi def link bcConfigureIdentifier Identifier
+hi def link bcConfigureOperator Operator
+hi def link bcConfigureNumber Number
+hi def link bcIdentifier PreProc
 
 hi def link bcConnection Keyword
 hi def link bcConnectionTarget Identifier
