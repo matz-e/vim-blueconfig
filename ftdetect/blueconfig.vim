@@ -1,1 +1,1 @@
-au BufRead,BufNewFile BlueConfig set filetype=blueconfig
+au BufRead,BufNewFile BlueConfig,CircuitConfig set filetype=blueconfig
